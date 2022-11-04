@@ -1,0 +1,144 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.home-content-conteiner {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 70px;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  padding: 20px 50px 20px 50px;
+  border-right: 1px solid #D7E8D0;
+}
+
+.home-content-side {
+  display: flex;
+  flex: 1;
+}
+
+.main-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.card-article-container {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.author-container {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-container {
+  margin-right: 16px;
+  margin-bottom: 10px;
+}
+
+.author-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.author-title {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.author-date {
+  font-size: 12px;
+  font-weight: 300;
+  margin-bottom: 24px;
+}
+
+.content-article-container {
+  display: flex;
+}
+
+.content-article {
+  display: flex;
+  flex: 2;
+  padding-right: 20px;
+}
+
+.image-article {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-text {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.image-article-post {
+  width: 250px;
+  height: 150px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.tags-content-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.tags-container {
+  display: flex;
+  width: 150px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #dcdcdc;
+  margin-right: 18px;
+}
+
+.home-content-side {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 50px 20px;
+}
+
+.tags-text {
+  line-height: 10px;
+}
+
+.interested-text {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 10px;
+  margin-bottom: 24px;
+}
+
+.thumb-container {
+  display: flex;
+  align-items: center;
+  margin-left: 40px;
+}
+
+.thumb-text {
+  margin-right: 6px;
+}
+
+.checkbox-main-container {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
