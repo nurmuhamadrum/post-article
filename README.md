@@ -1,4 +1,4 @@
-# Sinarmas Developer Test
+# Frontend Developer Assignment Test
 
 This website application is for writing simple articles where users can create, edit and delete articles.
 
@@ -7,7 +7,6 @@ This website application is for writing simple articles where users can create, 
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Setup](#setup)
 - [Screenshots](#screenshots)
 - [Built With](#built-with)
 - [Author](#author)
@@ -26,6 +25,7 @@ Make sure all of these are properly installed in your system.
 | React Js | [Link](https://reactjs.org/docs/getting-started.html)                |
 | Material UI | [Link](https://mui.com/material-ui/getting-started/installation/) |
 
+## Installation
 ### How to Installation & Running Web Application Localy
 
 First, clone this repository into your system.
