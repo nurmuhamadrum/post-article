@@ -17,9 +17,19 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import Tooltip from '@mui/material/Tooltip';
 
 // Function
-import { getArticleList, getUser, createArticle } from '../../Functions/functions';
+import {
+  getArticleList,
+  getUser,
+  createArticle,
+  deleteArticle,
+  editArticle
+} from '../../Functions/functions';
 
 export default function HomeScreen() {
   const [article, setArticle] = useState([]);
@@ -27,11 +37,16 @@ export default function HomeScreen() {
   const [pagination, setPagination] = useState(0);
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
-  const [checked, setChecked] = useState(true);
   const [tags, setTags] = useState([])
+  const [idContent, setIdContent] = useState(false)
+  const [isEdit, setIsEdit] = useState(false)
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false)
+    setContent('')
+    setIsEdit(false)
+  };
 
   useEffect(() => {
     handleGetArticle(0);
@@ -97,14 +112,61 @@ export default function HomeScreen() {
     }
   }
 
+  const handleEditArticle = async () => {
+    try {
+      const result = await editArticle(content, tags, idContent)
+
+      if (result.status === 200) {
+        handleClose();
+        setArticle([]);
+        setTags([])
+        handleGetArticle(0);
+      } else {
+        // handle error if failed edit to API
+      }
+
+    } catch (error) {
+      console.log('error@handleEditArticle');
+    }
+  }
+
+  const handleOpenModalToEdit = (value) => {
+    setContent(value.text)
+    setTags(value.tags)
+    setIdContent(value.id)
+    setIsEdit(true)
+    handleOpen()
+  }
+
+  /**
+   * Handle On Change Check
+   * @param {*} event 
+   * @param {*} element 
+   */
   const handleOnChangeCheck = (event, element) => {
     if (tags.includes(element)) {
       const newArr = tags.splice(element, 1);
-      
+
       setTags(newArr)
     } else {
-      setChecked(event.target.checked);
       setTags([...tags, element])
+    }
+  }
+
+  /**
+   * Handle Delete Article
+   * @param {String} id 
+   */
+  const handleDeleteArticle = async (id) => {
+    try {
+      const response = await deleteArticle(id)
+
+      if (response.status === 200) {
+        setArticle([]);
+        handleGetArticle(0);
+      }
+    } catch (error) {
+      console.log('error@handleDeleteArticle', error);
     }
   }
 
@@ -136,6 +198,20 @@ export default function HomeScreen() {
                       <p className='thumb-text'>{value?.likes}</p>
                       <ThumbUpAltRoundedIcon />
                     </div>
+
+                    {/** Delete Article */}
+                    <Tooltip title="Delete Article">
+                      <IconButton aria-label="delete" onClick={() => handleDeleteArticle(value.id)}>
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+
+                    {/** Edit Article */}
+                    <Tooltip title="Edit Article">
+                      <IconButton aria-label="edit" onClick={() => handleOpenModalToEdit(value)}>
+                        <EditRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
                   </div>
 
                   {/** Content Article Container */}
@@ -225,6 +301,15 @@ export default function HomeScreen() {
 
           {/** Popular Tags */}
           <p className='interested-text'>Popular Tags</p>
+          <div className='tags-content-container-side'>
+            {['Life Style', 'Student', 'Fashion', 'Animal', 'Adventure'].map((val, _) => {
+              return (
+                <div className='tags-container-side' key={val?.id}>
+                  <p className='tags-text-side'>{val}</p>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
 
@@ -244,7 +329,7 @@ export default function HomeScreen() {
           <TextareaAutosize
             aria-label="maximum height"
             placeholder={'Tulis Article...'}
-            defaultValue=""
+            defaultValue={content}
             onChange={handleOnchangeText}
             style={{ width: '100%', height: 200, fontFamily: 'Poppins', fontWeight: 500, lineHeight: 2, marginBottom: 14 }}
           />
@@ -254,14 +339,19 @@ export default function HomeScreen() {
 
               return (
                 <div className='checkbox-container'>
-                  <Checkbox checked={isChecked} onChange={(event) => handleOnChangeCheck(event, element)}/>
+                  <Checkbox checked={isChecked} onChange={(event) => handleOnChangeCheck(event, element)} />
                   <p>{element}</p>
                 </div>
               )
             })}
           </div>
-          <BootstrapButton variant="contained" disableRipple onClick={() => handleUploadArticle()}>
-            <p>Upload Article</p>
+          {console.log('=== is edit val ===', isEdit)}
+          <BootstrapButton variant="contained" disableRipple onClick={() => isEdit ? handleEditArticle() : handleUploadArticle()}>
+            {isEdit ? (
+              <p>Edit Article</p>
+            ) : (
+              <p>Upload Article</p>
+            )}
           </BootstrapButton>
         </Box>
       </Modal>

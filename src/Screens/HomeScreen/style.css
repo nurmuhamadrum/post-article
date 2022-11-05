@@ -91,8 +91,12 @@
 }
 
 .tags-content-container {
-  display: flex;
   margin-top: 10px;
+  display: grid;
+  margin-top: 44px;
+  grid-template-columns: 0fr 0fr 0fr;
+  grid-gap: 1rem;
+  height: auto;
 }
 
 .tags-container {
@@ -126,6 +130,7 @@
   display: flex;
   align-items: center;
   margin-left: 40px;
+  margin-right: 40px;
 }
 
 .thumb-text {
@@ -141,4 +146,25 @@
   display: flex;
   align-items: center;
   margin-right: 4px;
+}
+
+.tags-content-container-side {
+  display: grid;
+  grid-template-columns: 0fr 0fr 0fr;
+  grid-gap: 1rem;
+  height: auto;
+}
+
+.tags-container-side {
+  display: flex;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #dcdcdc;
+}
+
+.tags-text-side {
+  font-size: 14px;
+  line-height: 10px;
 }
