@@ -24,13 +24,14 @@ Make sure all of these are properly installed in your system.
 | ------------ | ----------------------------------------------------------------------------------- |
 | Git          | [Windows](https://gitforwindows.org/) / [Linux](https://git-scm.com/download/linux) / [MacOS](https://git-scm.com/download/mac) |
 | React Js | [Link](https://reactjs.org/docs/getting-started.html)                |
+| Material UI | [Link](https://mui.com/material-ui/getting-started/installation/) |
 
 ### How to Installation & Running Web Application Localy
 
 First, clone this repository into your system.
 
 ```
-git clone https://github.com/nurmuhamadrum/react-native-inspiro-test.git
+git clone https://github.com/nurmuhamadrum/post-article.git
 ```
 
 Then, install all the packages that described in `package.json`.
@@ -49,12 +50,14 @@ Wait till the web application is running in your browser on this http://localhos
 
 ## Screenshots
 
-<img src="docs/screenshoot/desktop.png" width="50%" />
+<img src="docs/screenshoot/desktop.png" width="80%" />
+<img src="docs/screenshoot/desktop-write.png" width="80%" />
 <img src="docs/screenshoot/mobile.png" width="30%"  />
 
 ## Built With
 
-- [REACT JJ](https://reactjs.org/) - FRONTEND
+- [REACT JS](https://reactjs.org/) - FRONTEND
+- [MATERIAL UI](https://mui.com/) - LIBRARY/FRAMEWORK
 - [DUMMYAPI.IO](https://dummyapi.io/) - DUMMY API
 
 ## Author
