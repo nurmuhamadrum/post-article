@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 
 const BASE_URL = 'https://dummyapi.io/data/v1';

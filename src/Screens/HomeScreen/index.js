@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import moment from 'moment';
-
 // Components
 import CHeader from '../../Components/CHeader/CHeader';
 import { BootstrapButton, style } from '../../Helpers/Helpers';
-
-// Material UI
+// Material UI Components
 import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import Skeleton from '@mui/material/Skeleton';
@@ -21,6 +19,14 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import Tooltip from '@mui/material/Tooltip';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 
 // Function
 import {
@@ -41,7 +47,28 @@ export default function HomeScreen() {
   const [tags, setTags] = useState([])
   const [idContent, setIdContent] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
 
+  /**
+   * Handle Open Side Menu Drawer
+   * @param {String} anchor 
+   * @param {*} open 
+   * @returns 
+   */
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) return;
+    setState({ ...state, [anchor]: open });
+  };
+
+  /**
+   * Handle Open & Close Modal
+   * @returns 
+   */
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false)
@@ -113,6 +140,9 @@ export default function HomeScreen() {
     }
   }
 
+  /**
+   * Handle Put Edit Article
+   */
   const handleEditArticle = async () => {
     try {
       const result = await editArticle(content, tags, idContent)
@@ -125,12 +155,15 @@ export default function HomeScreen() {
       } else {
         // handle error if failed edit to API
       }
-
     } catch (error) {
       console.log('error@handleEditArticle');
     }
   }
 
+  /**
+   * Handle Open Modal Edit
+   * @param {Object} value 
+   */
   const handleOpenModalToEdit = (value) => {
     setContent(value.text)
     setTags(value.tags)
@@ -171,9 +204,52 @@ export default function HomeScreen() {
     }
   }
 
+  /**
+   * Render List Side Menu Drawer
+   * @param {String} anchor 
+   * @returns 
+   */
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {['User', 'Article', 'Other'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
     <div className='home-container'>
-      <CHeader openModal={handleOpen} />
+      <CHeader openModal={handleOpen} openDrawer={toggleDrawer('left', true)} />
+
+      {/** Side Drawer Menu */}
+      <div>
+        {['left'].map((anchor) => (
+          <React.Fragment key={anchor}>
+            <Drawer
+              anchor={anchor}
+              open={state[anchor]}
+              onClose={toggleDrawer(anchor, false)}
+            >
+              {list(anchor)}
+            </Drawer>
+          </React.Fragment>
+        ))}
+      </div>
+
       <div className='home-content-conteiner'>
         <div className='home-content'>
           <p className='main-title'>Articles</p>
@@ -285,8 +361,8 @@ export default function HomeScreen() {
                     <Avatar alt="Remy Sharp" src={value?.picture} />
                   </div>
                   <div>
-                    <p className='author-title'>{value?.title}</p>
-                    <p className='author-name'>{value?.firstName} {value?.lastName}</p>
+                    <p className='author-title-side'>{value?.title}</p>
+                    <p className='author-name-side'>{value?.firstName} {value?.lastName}</p>
                   </div>
                 </div>
               )

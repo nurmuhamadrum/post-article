@@ -14,7 +14,7 @@ import { useWindowSize } from '../../Functions/functions'
 export default function CHeader(props) {
   return (
     <div className='header-container'>
-      <IconButton aria-label="menu" sx={useWindowSize() ? { marginLeft: 2 } : { marginLeft: 5 }}>
+      <IconButton onClick={props.openDrawer} aria-label="menu" sx={useWindowSize() ? { marginLeft: 2 } : { marginLeft: 5 }}>
         <MenuRoundedIcon fontSize="medium" />
       </IconButton>
       <p className='title'>READER</p>
