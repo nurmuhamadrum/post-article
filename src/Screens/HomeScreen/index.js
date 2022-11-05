@@ -28,7 +28,8 @@ import {
   getUser,
   createArticle,
   deleteArticle,
-  editArticle
+  editArticle,
+  useWindowSize
 } from '../../Functions/functions';
 
 export default function HomeScreen() {
@@ -216,16 +217,18 @@ export default function HomeScreen() {
 
                   {/** Content Article Container */}
                   <div className='content-article-container'>
-                    <div className='content-article'>
-                      <p className='content-text'>{value?.text}</p>
-                    </div>
-                    <div className='image-article'>
-                      <img
-                        src={value?.image}
-                        alt='post-article'
-                        className='image-article-post'
-                      />
-                    </div>
+                    <>
+                      <div className='content-article'>
+                        <p className='content-text'>{value?.text}</p>
+                      </div>
+                      <div className='image-article'>
+                        <img
+                          src={value?.image}
+                          alt='post-article'
+                          className='image-article-post'
+                        />
+                      </div>
+                    </>
                   </div>
 
                   {/** Tags Article */}
@@ -263,6 +266,13 @@ export default function HomeScreen() {
             </div>
           )}
         </div>
+
+        {/** Pagination Mobile */}
+        {useWindowSize() && (
+          <Stack spacing={2} sx={{ alignItems: 'center', marginBottom: 2 }}>
+            <Pagination count={pagination} variant="outlined" shape="rounded" onChange={handleOnchange} />
+          </Stack>
+        )}
 
         {/** Side Conntent Container */}
         <div className='home-content-side'>
@@ -313,10 +323,12 @@ export default function HomeScreen() {
         </div>
       </div>
 
-      {/** Pagination */}
-      <Stack spacing={2} sx={{ marginBottom: 10, paddingLeft: 38 }}>
-        <Pagination count={pagination} variant="outlined" shape="rounded" onChange={handleOnchange} />
-      </Stack>
+      {/** Pagination Desktop */}
+      {!useWindowSize() && (
+        <Stack spacing={2} sx={{ marginBottom: 10, paddingLeft: 38 }}>
+          <Pagination count={pagination} variant="outlined" shape="rounded" onChange={handleOnchange} />
+        </Stack>
+      )}
 
       {/** Modal Create Article */}
       <Modal
@@ -345,7 +357,6 @@ export default function HomeScreen() {
               )
             })}
           </div>
-          {console.log('=== is edit val ===', isEdit)}
           <BootstrapButton variant="contained" disableRipple onClick={() => isEdit ? handleEditArticle() : handleUploadArticle()}>
             {isEdit ? (
               <p>Edit Article</p>

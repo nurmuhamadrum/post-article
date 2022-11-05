@@ -1,8 +1,9 @@
+import React, { useState, useLayoutEffect } from 'react';
 import axios from 'axios';
 
 const BASE_URL = 'https://dummyapi.io/data/v1';
 const APP_ID = '63639cafcd846c72c251bb4d';
-const headers_ = { headers: { 'app-id': APP_ID }};
+const headers_ = { headers: { 'app-id': APP_ID } };
 
 export const getArticleList = async (page = 1) => {
 	return new Promise(async (resolve, reject) => {
@@ -45,7 +46,7 @@ export const createArticle = async (content, tags) => {
 				"text": content,
 				"owner": "63652b643eb3e26fc0faf02b"
 			}
-			
+
 			const response = await axios.post(url, body, headers_)
 			resolve(response)
 		} catch (error) {
@@ -78,7 +79,7 @@ export const editArticle = async (content, tags, id) => {
 				"text": content,
 				"owner": "63652b643eb3e26fc0faf02b"
 			}
-			
+
 			const response = await axios.put(url, body, headers_)
 			resolve(response)
 		} catch (error) {
@@ -86,4 +87,20 @@ export const editArticle = async (content, tags, id) => {
 			console.log('error@function.editArticle', error);
 		}
 	})
+}
+
+export const useWindowSize = () => {
+	const [size, setSize] = useState([0, 0]);
+
+	useLayoutEffect(() => {
+		function updateSize() {
+			setSize([window.innerWidth, window.innerHeight]);
+		}
+		window.addEventListener('resize', updateSize);
+
+		updateSize();
+		return () => window.removeEventListener('resize', updateSize);
+	}, []);
+
+	return size[0] <= 768;
 }

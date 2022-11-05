@@ -21,3 +21,11 @@
     align-items: center;
     margin-right: 60px;
 }
+
+@media only screen and (max-width: 768px) {
+    .header-side-right-container {
+        display: flex;
+        align-items: center;
+        margin-right: 30px;
+    }
+}
